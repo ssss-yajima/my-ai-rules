@@ -1,0 +1,46 @@
+# プロジェクト要件定義書（USDM）
+$schema: "../usdm-schema.json" # スキーマファイルへの参照
+title: "プロジェクト要件定義書"
+purpose: |
+  システムの目的を記述します。
+  複数行での記述が可能です。
+overview: |
+  システムの概要を記述します。
+  主要機能や対象ユーザーなどを記述します。
+
+requirements:
+  - id: REQ-001
+    type: 要求
+    name: 要求名
+    description: ユーザーは〜できる
+    notes: 備考があれば記述します
+    specifications:
+      - id: SPEC-001-01
+        type: 仕様
+        name: 仕様名
+        description: ユーザーが〜した時に、システムは〜する
+        rationale: REQ-001の実現に必要なため
+        related_id: null
+        gherkin_scenario: 仕様名
+
+      - id: SPEC-001-02
+        type: 仕様
+        name: 別の仕様名
+        description: ユーザーが〜した時に、システムは〜する
+        rationale: REQ-001の実現に必要なため
+        related_id: SPEC-001-01
+        gherkin_scenario: 別の仕様名
+
+  - id: REQ-002
+    type: 要求
+    name: 別の要求名
+    description: システムは〜する
+    notes: 備考があれば記述します
+    specifications:
+      - id: SPEC-002-01
+        type: 仕様
+        name: REQ-002に関する仕様名
+        description: 〜の条件下で、システムは〜する
+        rationale: REQ-002の実現に必要なため
+        related_id: null
+        gherkin_scenario: REQ-002に関する仕様名

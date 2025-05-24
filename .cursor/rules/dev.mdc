@@ -1,0 +1,19 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 基本的な実装方針
+
+DDD, TDD, クリーンアーキテクチャを基本とします。
+
+## Python
+
+パッケージ管理 : uv
+Lint, Format : ruff
+テスト: pytest
+
+## TypeScript
+
+パッケージ管理 : npm
+Lint, Format : biome.js

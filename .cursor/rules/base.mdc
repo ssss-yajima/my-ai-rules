@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# ファイル構成と役割
+
+```
+.
+├── README.md
+└── docs
+    ├── memo                             // 設計時のメモ、相談などの一時的な情報の置場
+    │   ├── 01_xxx.md
+    │   └── 02_yyy.md
+    ├── adr                              // ADRを書くフォルダ。連番を振る。
+    │   ├── 01_foo.md
+    │   └── 02_bar.md
+    ├── designdoc.md                      // 最終的なシステム仕様を書くファイル
+    ├── feature                           // Gherkin記法でテストを書くディレクトリ。ファイル拡張子は .feature とする
+    │   ├── hoge.feature
+    │   └── fuga.feature
+    ├── gherkin-usdm
+    │   └── templates
+    │       ├── feature_template.feature  // Gherkin記法のサンプル
+    │       ├── usdm-schema.json          // USDMのサンプル
+    │       └── usdm_template.yaml        // USDMのYamlスキーマ
+    ├── todo.md                           // 作業計画および進捗
+    └── usdm.yaml                         // 実際にUSDMを書くファイル
+```
+
+# 作業計画と進捗の管理
+
+具体的な設計・実装に入るときは todo.md に作業ステップをチェックリストとして書き出します。
+作業が完了した場合または依頼された場合、進捗状況に応じてチェックリストを更新します。
+
+作業は大項目・小項目に階層化して考えます。
+大項目は1つのプルリクエストの単位を意識してください。
+USDMと紐づける必要はありません。
+
+
+
