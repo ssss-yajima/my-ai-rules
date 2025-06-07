@@ -5,15 +5,135 @@ alwaysApply: true
 ---
 # 基本的な実装方針
 
-DDD, TDD, クリーンアーキテクチャを基本とします。
+TDDで開発を進めます。
+
+テストを書く際、利用しているライブラリの動作確認をするような冗長なテストは書いてはいけません。
+実装した処理が期待した振る舞いをするかどうかを考えます。
+
+できるだけモックは使わず実際のリソースを使います。
+ローカルでリソースを用意するためにDockerやDocker Composeが必要であれば、提案してください。
+
+カバレッジを上げるだけの無駄なテストは負債になるので、テストカバレッジは100%を目指す必要はありません。
+主要なケースや要注意なケース、重大な不具合になりうるケースに対するテストを書くことを意識してください。
 
 ## Python
 
-パッケージ管理 : uv
-Lint, Format : ruff
-テスト: pytest
+### 使用技術
+
+
+- Webフレームワーク: FastAPI
+- CLIフレームワーク: Typer
+- パッケージ管理: uv
+- Lint/Format: Ruff
+- テスト: pytest
+- 型付け: Typing
+- モデル定義: Pydantic
+- 環境変数/設定管理: Pydantic-Settings
+
+### プロジェクト作成
+
+```bash
+# プロジェクト初期化
+uv init --name project_name --python 3.12
+
+# 基本パッケージのインストール
+uv add pydantic pydantic-settings
+uv add --dev ruff pytest pyright pytest-cov
+```
+
+### biome.jsonの基本設定
+
+```jsonc
+{
+  "organizeImports": {
+    "enabled": true
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "es5",
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
+  },
+  "json": {
+    "formatter": {
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
+  },
+  "formatter": {
+    "formatWithErrors": false
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noForEach": "off"
+      },
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "warn"
+      }
+    }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  }
+}
+```
+
+### 基本的なコマンド
+
+#### 実行
+
+```bash
+uv run python entry_point.py
+# または
+uv run python -m entry.module
+```
+
+#### Lint/Format
+
+```bash
+uv run ruff check --fix --unsafe-fixes
+uv run ruff format
+```
+
+#### テスト実行
+
+```bash
+uv run pytest -v --cov
+```
 
 ## TypeScript
 
-パッケージ管理 : npm
-Lint, Format : biome.js
+### 使用技術
+
+- Webフレームワーク: React または Next.js
+- パッケージ管理: pnpm
+- Lint/Format: Biome.js
+- テスト: Vitest
+- バリデーション: Zod
+
+### プロジェクト作成（Next.js）
+
+```bash
+npx create-next-app@latest project_name --ts --tailwind --src-dir --eslint no --use-pnpm --disable-git --app --turbopack --import-alias "@/*"
+
+pnpm add --save-dev --save-exact @biomejs/biome vitest
+
+pnpm biome init --jsonc
+```
+
+### 基本的なコマンド
+
+#### Lint/Format
+
+```bash
+npx @biomejs/biome check --write ./src
+```
+
