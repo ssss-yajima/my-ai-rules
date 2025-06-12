@@ -1,5 +1,8 @@
 # CLAUDE.md
 
+作業を進めるときは @.claude/todos フォルダに TODOチェックリストを作って、更新しながら作業をしてください。
+
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
@@ -17,13 +20,7 @@ This repository contains custom Cursor rules for AI-driven system design and dev
     ├── adr/                   # Architecture Decision Records
     ├── designdoc.md           # System specification document
     ├── feature/               # Gherkin feature files (.feature)
-    ├── gherkin-usdm/
-    │   └── templates/
-    │       ├── feature_template.feature  # Gherkin syntax example
-    │       ├── usdm-schema.json          # JSON schema for USDM validation
-    │       └── usdm_template.yaml        # USDM template example
-    ├── todo.md                # Work planning and progress tracking
-    └── usdm.yaml              # Actual USDM specification
+    ├── requirements/          # USDM Requirements files (.yaml)
 ```
 
 ## Development Process
