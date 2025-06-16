@@ -209,6 +209,5 @@
 	"preferredNotifChannel": "terminal_bell",
 	"enabledMcpjsonServers": [
 		"playwright"
-	],
-	"enableAllProjectMcpServers": true
+	]
 }
