@@ -1,5 +1,5 @@
 {
-	"model": "sonnet",
+	"model": "opus",
 	"theme": "dark",
 	"cleanupPeriodDays": 30,
 	"permissions": {
@@ -206,5 +206,9 @@
 		"BASH_MAX_TIMEOUT_MS": "1200000",
 		"SHELL": "/opt/homebrew/bin/fish"
 	},
-	"preferredNotifChannel": "terminal_bell"
+	"preferredNotifChannel": "terminal_bell",
+	"enabledMcpjsonServers": [
+		"playwright"
+	],
+	"enableAllProjectMcpServers": true
 }
