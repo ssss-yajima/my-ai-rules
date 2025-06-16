@@ -65,6 +65,52 @@ The project follows a structured development process:
 - Testing: Vitest
 - Validation: Zod
 
+## Security - secretlint設定
+
+### 概要
+
+secretlintとpre-commit hookにより秘密情報の誤コミットを防止します。
+
+### セットアップ
+
+```bash
+# 依存関係インストールとhookセットアップ
+task setup-hooks
+
+# または手動で
+pnpm install
+chmod +x .husky/pre-commit
+```
+
+### 使用方法
+
+```bash
+# 秘密情報チェック実行
+task secretlint
+
+# 修正可能な問題を自動修正
+task secretlint:fix
+
+# 個別実行
+pnpm secretlint "**/*"
+pnpm secretlint:fix "**/*"
+```
+
+### 設定ファイル
+
+- `.secretlintrc.json`: secretlint設定
+- `.husky/pre-commit`: pre-commitフック
+- `package.json`: 依存関係とスクリプト定義
+
+### 検出対象
+
+- AWS系認証情報（Access Key, Secret Key, ARN等）
+- GitHub Token
+- API Key汎用パターン
+- JWT Token
+- プライベートキー（RSA, SSH等）
+- Basic認証情報
+
 ## Commands
 
 ### Task Runner

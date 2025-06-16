@@ -1,0 +1,26 @@
+{
+  "name": "my-cursor-rules",
+  "version": "1.0.0",
+  "description": "USDMとGherkin記法をベースにAI駆動でシステム設計、開発するルール郡",
+  "scripts": {
+    "secretlint": "secretlint .",
+    "secretlint:fix": "secretlint \"**/*\" --fix",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "secretlint": "^8.2.4",
+    "@secretlint/secretlint-rule-preset-recommend": "^8.2.4",
+    "@secretlint/secretlint-rule-aws": "^8.2.4",
+    "@secretlint/secretlint-rule-github": "^8.2.4",
+    "@secretlint/secretlint-rule-gcp": "^8.2.4",
+    "@secretlint/secretlint-rule-privatekey": "^8.2.4",
+    "@secretlint/secretlint-rule-basicauth": "^8.2.4",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7"
+  },
+  "lint-staged": {
+    "*": [
+      "secretlint"
+    ]
+  }
+}
