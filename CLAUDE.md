@@ -1,160 +1,106 @@
 # CLAUDE.md
 
-作業を進めるときは @.claude/todos フォルダに TODOチェックリストを作って、更新しながら作業をしてください。
-
-
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+## プロジェクト概要
 
-This repository contains custom Cursor rules for AI-driven system design and development based on USDM (Universal Specification Describing Manner) with acceptance tests using Gherkin syntax. The project aims to establish a structured workflow for requirements management, specification, and testing.
+{write here}
 
-## Repository Structure
+
+---
+
+### 📋 タスク管理
+
+#### リアルタイム管理（TodoWriteツール）
+- **目的**: 作業中のタスク管理と進捗追跡
+- **状態**: pending → in_progress → completed
+- **優先度**: high / medium / low
+- **ルール**:
+  - 作業開始時に必ず`in_progress`に更新
+  - 完了時は即座に`completed`に更新
+  - 適切に分割されたタスクは複数並列実行可能
+
+#### ファイルとしてのタスク管理
 
 ```
-.
-├── README.md
-├── Taskfile.yml               # Task runner configuration
-├── biome.jsonc                # Biome.js configuration for linting/formatting
-└── docs/
-    ├── adr/                   # Architecture Decision Records
-    ├── designdoc.md           # System specification document
-    ├── feature/               # Gherkin feature files (.feature)
-    ├── requirements/          # USDM Requirements files (.yaml)
+docs/
+├── todos/
+│   ├── todo.md           # プロジェクト全体状況のチェックリスト
+│   ├── {task title}.md   # 各タスクの詳細な計画
+├── archive/
+│   └── *.md              # 完了したタスクやドキュメントの置場
 ```
 
-## Development Process
+**重要**: 大きな作業の完了時は必ず`todo.md`や`{task title}.md`を更新すること。
+タスクが完了した場合 `{task title}.md`を`archive/`に移動すること。
 
-The project follows a structured development process:
 
-1. **Requirements Definition (USDM)**:
-   - Define requirements in YAML format following the USDM structure
-   - Use REQ-XXX format for requirements and SPEC-XXX-YY for specifications
-   - Follow the schema defined in usdm-schema.json
 
-2. **Acceptance Tests (Gherkin)**:
-   - Create feature files with Gherkin syntax for acceptance criteria
-   - Use @USDM tags to link scenarios to specifications
-   - Follow the template in feature_template.feature
+## 開発原則
 
-3. **Work Planning**:
-   - Use todo.md to create hierarchical task lists
-   - Update task progress as work is completed
+開発の基本原則とガイドラインは以下のドキュメントを参照。
+技術選定が完了したタイミングで、各ドキュメントを更新すること。
 
-4. **Implementation**:
-   - Follow TDD principles (write tests first)
-   - Implement code according to specifications
-   - Focus on testing key functionality rather than aiming for 100% coverage
+- **共通開発ガイドライン**: @docs/dev/common.md
+- **Python開発**: @docs/dev/python.md
+- **TypeScript/JavaScript開発**: @docs/dev/typescript.md
 
-## Technology Stack
+### 開発コマンド
 
-### Python
-- Web Framework: FastAPI
-- CLI Framework: Typer
-- Package Management: uv
-- Lint/Format: Ruff
-- Testing: pytest
-- Type Checking: Typing
-- Model Definition: Pydantic
-- Environment/Configuration: Pydantic-Settings
+主要なタスクコマンドは @Taskfile.yaml で定義されています。
 
-### TypeScript
-- Web Framework: React or Next.js
-- Package Management: pnpm
-- Lint/Format: Biome.js
-- Testing: Vitest
-- Validation: Zod
 
-## Security - secretlint設定
+### コード品質
 
-### 概要
+コード品質管理の詳細は @docs/dev/common.md#コード品質管理 を参照
 
-secretlintとpre-commit hookにより秘密情報の誤コミットを防止します。
 
-### セットアップ
+### 🔄 基本的な作業フロー
 
-```bash
-# 依存関係インストールとhookセットアップ
-task setup-hooks
 
-# または手動で
-pnpm install
-chmod +x .husky/pre-commit
-```
+2. **ブランチ戦略**
+   ```bash
+   # 新機能開発
+   git switch -c feature/機能名
+   
+   # バグ修正
+   git switch -c fix/問題名
+   
+   # リファクタリング
+   git switch -c refactor/対象名
+   ```
 
-### 使用方法
+3. **実装フロー**
+   - 小さな単位で段階的に実装
+   - 各ステップでコミット（意味のある単位で）
 
-```bash
-# 秘密情報チェック実行
-task secretlint
+5. **コミット・プルリクエスト**
+   ```bash
+   # 適切なファイルのみをステージング
+   git add src/components/VideoTile.tsx
+   git add src/lib/localStorage.ts
+   # または対話的に選択
+   git add -p
+   
+   # 意味のある単位でコミット
+   git commit -m "feat: 機能説明
+   
+   - 実装内容の詳細
+   - 技術的な判断理由
+   
+   🤖 Generated with Claude Code
+   
+   Co-Authored-By: Claude <noreply@anthropic.com>"
+   
+   # プルリクエスト作成
+   git push origin feature/機能名
+   gh pr create --title "feat: 機能名" --body "説明"
+   ```
 
-# 修正可能な問題を自動修正
-task secretlint:fix
 
-# 個別実行
-pnpm secretlint "**/*"
-pnpm secretlint:fix "**/*"
-```
+==================================================================
 
-### 設定ファイル
+以下、プロジェクト固有情報
 
-- `.secretlintrc.json`: secretlint設定
-- `.husky/pre-commit`: pre-commitフック
-- `package.json`: 依存関係とスクリプト定義
+==================================================================
 
-### 検出対象
-
-- AWS系認証情報（Access Key, Secret Key, ARN等）
-- GitHub Token
-- API Key汎用パターン
-- JWT Token
-- プライベートキー（RSA, SSH等）
-- Basic認証情報
-
-## Commands
-
-### Task Runner
-
-```bash
-# List available tasks
-task list
-
-# Run default task
-task
-```
-
-### Python Development
-
-```bash
-# Initialize project
-uv init --name project_name --python 3.12
-
-# Add dependencies
-uv add pydantic pydantic-settings
-uv add --dev ruff pytest pyright pytest-cov
-
-# Run Python code
-uv run python entry_point.py
-uv run python -m entry.module
-
-# Linting and formatting
-uv run ruff check --fix --unsafe-fixes
-uv run ruff format
-
-# Run tests
-uv run pytest -v --cov
-```
-
-### TypeScript Development
-
-```bash
-# Project setup (Next.js)
-npx create-next-app@latest project_name --ts --tailwind --src-dir --eslint no --use-pnpm --disable-git --app --turbopack --import-alias "@/*"
-
-pnpm add --save-dev --save-exact @biomejs/biome vitest
-
-pnpm biome init --jsonc
-
-# Linting and formatting
-npx @biomejs/biome check --write ./src
-```
