@@ -1,0 +1,31 @@
+version: "3"
+
+tasks:
+  default:
+    silent: true
+    cmds:
+      - task list
+
+  list:
+    desc: タスク一覧を表示
+    silent: true
+    cmds:
+      - task --list
+
+  secretlint:
+    desc: 秘密情報チェック
+    cmds:
+      - pnpm secretlint
+
+  secretlint:fix:
+    desc: 秘密情報チェック（修正付き）
+  
+    cmds:
+      - pnpm secretlint:fix
+
+
+
+  setup-hooks:
+    desc: pre-commit hook設定
+      cmds:
+      - pnpm install
