@@ -1,0 +1,35 @@
+[tools]
+node = "20"
+python = "3.13"
+jq = "latest"
+fzf = "latest"
+ripgrep = "latest"
+fd = "latest"
+bat = "latest"
+eza = "latest"
+
+[env]
+PROJECT_NAME = "my-cursor-rules"
+NODE_ENV = "development"
+PYTHONPATH = "."
+NODE_OPTIONS = "--max-old-space-size=4096"
+
+[tasks]
+# https://mise.jdx.dev/tasks/running-tasks.html
+# ref: docs/dev/references/mise-tasks.md
+
+# example
+# [tasks.build]
+# description = 'Build the CLI'
+# run = "cargo build"
+# sources = ['Cargo.toml', 'src/**/*.rs'] # skip running if these files haven't changed
+# outputs = ['target/debug/mycli']
+
+dev = "task dev"
+test = "task test"
+lint = "task lint"
+format = "task format"
+
+[tasks.setup]
+description = "Setup the project"
+run = ["pnpm install"]

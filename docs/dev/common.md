@@ -25,7 +25,7 @@
 ### Pre-commit Hook 設定
 1. **初期設定**
    ```bash
-   task setup:pre-commit
+   mise run setup
    ```
 
 2. **Lint/Format 設定**
@@ -33,15 +33,21 @@
    - プロジェクトルートの `package.json` に `lint-staged` 設定を追加
      - 各サブパッケージのlint, formatコマンドを設定する
 
+3. **Pre-commit Hook 設定**
+   - 各サブパッケージに `.lintstagedrc` を追加してlit, formatコマンドを設定する
+
 3. **セキュリティチェック**
    - secretlint による機密情報の漏洩防止
 
 ## 開発ワークフロー
 
-### 実行コマンド管理
-- 主要なコマンドは `Taskfile.yml` に定義
-- コマンドの追加・更新・削除時は必ず `Taskfile.yml` を更新
-- `task --list` で利用可能なコマンドを確認
+### ツール・コマンド・環境変数の管理
+- mise を使用してツール・コマンド・環境変数を管理する
+- 主要なコマンドは `mise.toml` に定義
+- コマンドの追加・更新・削除時は必ず `mise.toml` を更新
+- `mise tasks` で利用可能なコマンドを確認
+- `mise run <task>` でコマンドを実行
+- その他のリファレンスは @docs/dev/references/mise-tasks.md を参照
 
 ### テスト方針
 - **重要なビジネスロジック**にはテストを作成
