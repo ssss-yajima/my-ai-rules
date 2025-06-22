@@ -1,0 +1,71 @@
+{
+  "name": "develop-with-ai-tools",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "root",
+
+  // Features to add to the dev container
+  "features": {
+    // Git と GitHub CLI
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    
+    // Docker-outside-of-docker (ホストのDockerを使用)
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+    
+    // AWS CLI
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    
+    // Fish shell
+    "ghcr.io/meaningful-ooo/devcontainer-features/fish:2": {}
+  },
+
+  // 初期化処理
+  "postCreateCommand": "bash .devcontainer/init.sh",
+
+  // VS Code設定
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "fish",
+        "editor.formatOnSave": true,
+        "files.autoSave": "afterDelay",
+        "files.watcherExclude": {
+          "**/.git/objects/**": true,
+          "**/.git/subtree-cache/**": true,
+          "**/node_modules/**": true,
+          "**/.hg/store/**": true,
+          "**/.mise/**": true
+        },
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "biomejs.biome"
+        }
+      },
+      "extensions": [
+        // Python
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "biomejs.biome"
+      ]
+    }
+  },
+
+  "remoteEnv": {
+    "SHELL": "/usr/bin/fish",
+    "PYTHONPATH": "/workspace"
+  }
+
+}
