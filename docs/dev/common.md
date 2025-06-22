@@ -22,26 +22,67 @@
 - ハードコーディングを避け、設定ファイルや定数を活用
 - 不要になったソースコードやファイルは速やかに削除
 
+### セキュリティチェック
+secretlint による機密情報の漏洩防止
+
 ### Pre-commit Hook 設定
-1. **初期設定**
-   ```bash
-   task setup:pre-commit
-   ```
+**初期設定**
+```bash
+mise run setup
+```
 
-2. **Lint/Format 設定**
-   - 各言語/フレームワークのセットアップを事前に済ませる
-   - プロジェクトルートの `package.json` に `lint-staged` 設定を追加
-     - 各サブパッケージのlint, formatコマンドを設定する
+**Lint/Format 設定**
+- 各言語/フレームワークのセットアップを事前に済ませる
+- プロジェクトルートの `package.json` に `lint-staged` 設定を追加
+   - 各サブパッケージのlint, formatコマンドを設定する
 
-3. **セキュリティチェック**
-   - secretlint による機密情報の漏洩防止
+**Pre-commit Hook 設定**
+各サブパッケージに `.lintstagedrc` を追加してlit, formatコマンドを設定する。
+
+例：Pythonの場合
+```
+{
+  "**/*.py": [
+    "uv run ruff check --fix",
+    "uv run ruff format"
+  ]
+}
+```
+
+例：TypeScriptの場合
+```
+{
+  "**/*.{js,jsx,ts,tsx,json,css}": [
+    "npx @biomejs/biome check --write"
+  ]
+}
+```
+
+
+secretlint, yamllintなど全体に対するlinterはPJルートに設定する。
+
+```
+{
+  "**/*": "secretlint",
+  "uvx yamllint -d "{ignore-from-file: .gitignore}" . 
+}
+```
+
+
+`npx lint-staged --verbose` を実行して動作確認を行う。
+
+
+
 
 ## 開発ワークフロー
 
-### 実行コマンド管理
-- 主要なコマンドは `Taskfile.yml` に定義
-- コマンドの追加・更新・削除時は必ず `Taskfile.yml` を更新
-- `task --list` で利用可能なコマンドを確認
+### ツール・コマンド・環境変数の管理
+- mise を使用してツール・コマンド・環境変数を管理する
+- 主要なコマンドは `mise.toml` に定義
+- コマンドの追加・更新・削除時は必ず `mise.toml` を更新
+- `mise tasks` で利用可能なコマンドを確認
+- `mise run <task>` でコマンドを実行
+- その他のリファレンスは @docs/dev/references/mise-tasks.md を参照
 
 ### テスト方針
 - **重要なビジネスロジック**にはテストを作成

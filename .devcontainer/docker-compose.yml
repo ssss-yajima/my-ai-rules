@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  dev:
+    image: mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+    volumes:
+      # プロジェクトディレクトリ
+      - ..:/workspace:cached
+      
+      # ローカル設定の引き継ぎ
+      - ~/.aws:/root/.aws:ro
+      - ~/.ssh:/root/.ssh:ro
+      - ~/.gitconfig:/root/.gitconfig:ro
+      
+      # 履歴の永続化
+      - devcontainer-fishhistory:/root/.local/share/fish
+      
+      # Dockerソケット (Docker-outside-of-docker用)
+      - ${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock
+      
+      # 永続化ボリューム
+      - mise-data:/root/.local/share/mise
+
+    # コンテナを起動したままにする
+    command: sleep infinity
+
+    # ネットワークモード
+    network_mode: bridge
+
+    # 環境変数
+    environment:
+      - SHELL=/usr/bin/fish
+      - PYTHONPATH=/workspace
+
+volumes:
+  devcontainer-fishhistory:
+  mise-data:

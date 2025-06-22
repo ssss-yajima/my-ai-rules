@@ -1,0 +1,4 @@
+{
+  "**/*": "secretlint",
+  "uvx yamllint -d "{ignore-from-file: .gitignore}" . 
+}

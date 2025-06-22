@@ -1,0 +1,18 @@
+# mise local configuration template
+# Copy this file to mise.local.toml and customize for your environment
+# mise.local.toml is gitignored
+
+[env]
+# AWS設定（必要に応じて）
+# AWS_PROFILE = "your-profile"
+# AWS_DEFAULT_REGION = "ap-northeast-1"
+
+# データベース接続情報（必要に応じて）
+# DATABASE_URL = "postgresql://user:password@localhost:5432/dbname"
+
+# API Keys（必要に応じて）
+# OPENAI_API_KEY = "your-api-key"
+# ANTHROPIC_API_KEY = "your-api-key"
+
+# その他のローカル環境変数
+# CUSTOM_VAR = "value"
