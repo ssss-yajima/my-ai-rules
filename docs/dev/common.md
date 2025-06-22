@@ -22,22 +22,57 @@
 - ハードコーディングを避け、設定ファイルや定数を活用
 - 不要になったソースコードやファイルは速やかに削除
 
+### セキュリティチェック
+secretlint による機密情報の漏洩防止
+
 ### Pre-commit Hook 設定
-1. **初期設定**
-   ```bash
-   mise run setup
-   ```
+**初期設定**
+```bash
+mise run setup
+```
 
-2. **Lint/Format 設定**
-   - 各言語/フレームワークのセットアップを事前に済ませる
-   - プロジェクトルートの `package.json` に `lint-staged` 設定を追加
-     - 各サブパッケージのlint, formatコマンドを設定する
+**Lint/Format 設定**
+- 各言語/フレームワークのセットアップを事前に済ませる
+- プロジェクトルートの `package.json` に `lint-staged` 設定を追加
+   - 各サブパッケージのlint, formatコマンドを設定する
 
-3. **Pre-commit Hook 設定**
-   - 各サブパッケージに `.lintstagedrc` を追加してlit, formatコマンドを設定する
+**Pre-commit Hook 設定**
+各サブパッケージに `.lintstagedrc` を追加してlit, formatコマンドを設定する。
 
-3. **セキュリティチェック**
-   - secretlint による機密情報の漏洩防止
+例：Pythonの場合
+```
+{
+  "**/*.py": [
+    "uv run ruff check --fix",
+    "uv run ruff format"
+  ]
+}
+```
+
+例：TypeScriptの場合
+```
+{
+  "**/*.{js,jsx,ts,tsx,json,css}": [
+    "npx @biomejs/biome check --write"
+  ]
+}
+```
+
+
+secretlint, yamllintなど全体に対するlinterはPJルートに設定する。
+
+```
+{
+  "**/*": "secretlint",
+  "uvx yamllint -d "{ignore-from-file: .gitignore}" . 
+}
+```
+
+
+`npx lint-staged --verbose` を実行して動作確認を行う。
+
+
+
 
 ## 開発ワークフロー
 
