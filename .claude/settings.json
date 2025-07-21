@@ -1,6 +1,5 @@
 {
 	"model": "opus",
-	"theme": "dark",
 	"cleanupPeriodDays": 30,
 	"permissions": {
 		"allow": [
@@ -206,7 +205,6 @@
 		"BASH_MAX_TIMEOUT_MS": "1200000",
 		"SHELL": "/opt/homebrew/bin/fish"
 	},
-	"preferredNotifChannel": "terminal_bell",
 	"enabledMcpjsonServers": [
 		"playwright"
 	]
